@@ -5,43 +5,43 @@
 </p>
 
 <p align="center">
-  Eine kleine macOS Menu Bar App, die Flugzeuge in deinem Umkreis live anzeigt.
+  A small macOS menu bar app that shows aircraft in your area in real time.
 </p>
 
 ---
 
-## Was macht die App?
+## What it does
 
-MenuBarADSB sitzt in deiner Menu Bar und zeigt das nächstgelegene (oder höchste / niedrigste / schnellste) Flugzeug in einem konfigurierbaren Radius um deinen aktuellen Standort an. Mit einem Klick siehst du eine Liste aller Flugzeuge in der Nähe — Identifier, Airline, Route, Flugzeugtyp, Höhe, Geschwindigkeit, Distanz und Richtung. Klick auf ein Flugzeug öffnet es auf Flightradar24 oder dem adsb.lol Globe.
+MenuBarADSB lives in your menu bar and shows the closest (or highest / lowest / fastest) aircraft within a configurable radius around your current location. Click it to see the full list of nearby aircraft — identifier, airline, route, type, altitude, speed, distance, and heading. Clicking an aircraft opens it on Flightradar24 or the adsb.lol globe.
 
 ## Features
 
-- **Live‑Tracking** in einem Radius von 1–50 km, Update alle 5–60 Sekunden
-- **Menu Bar Anzeige** frei konfigurierbar — wähle, welche Felder neben dem Identifier angezeigt werden
-- **Dropdown‑Liste** mit allen Flugzeugen im Umkreis, sortiert nach Distanz
-- **„Hervorgehoben" Auswahl**: Nächstes / Höchste Flughöhe / Niedrigste Flughöhe / Schnellstes
-- **Benachrichtigungen** bei neu auftauchenden Flugzeugen (optional)
-- **Beim Anmelden öffnen** (`SMAppService`)
-- **Lokalisierung**: Deutsch & Englisch (folgt der System‑Sprache)
-- **Sandboxed**, signiert mit Hardened Runtime
-- Reine SwiftUI, keine externen Dependencies
+- **Live tracking** within a 1–50 km radius, updating every 5–60 seconds
+- **Configurable menu bar display** — pick which fields appear next to the identifier
+- **Dropdown list** of all nearby aircraft, sorted by distance
+- **"Featured" selection**: closest / highest altitude / lowest altitude / fastest
+- **Notifications** for newly appearing aircraft (optional)
+- **Launch at login** (`SMAppService`)
+- **Localization**: English & German (follows system language)
+- **Sandboxed**, signed with Hardened Runtime
+- Pure SwiftUI, no external dependencies
 
-## Datenquellen
+## Data sources
 
-Die App ruft Daten **live** von zwei öffentlichen APIs ab — es findet keine eigene Datenspeicherung statt:
+The app fetches data **live** from two public APIs — nothing is stored locally:
 
-| Daten | Quelle |
+| Data | Source |
 |---|---|
-| Flugzeugpositionen (ICAO, Position, Höhe, Speed, Track) | [adsb.lol](https://www.adsb.lol) |
-| Airline‑Name & Route (Origin/Destination IATA) per Callsign | [adsbdb.com](https://www.adsbdb.com) |
+| Aircraft positions (ICAO, position, altitude, speed, track) | [adsb.lol](https://www.adsb.lol) |
+| Airline name & route (origin/destination IATA) by callsign | [adsbdb.com](https://www.adsbdb.com) |
 
-Großen Dank an die Betreiber beider Projekte für die kostenlose Verfügbarkeit.
+Big thanks to the maintainers of both projects for offering these for free.
 
-## Build & Run
+## Build & run
 
-**Voraussetzungen:**
-- macOS 26 oder neuer
-- Xcode 26 oder neuer
+**Requirements:**
+- macOS 26 or newer
+- Xcode 26 or newer
 
 ```bash
 git clone https://github.com/RobinSp5/MacADSBMenuBar.git
@@ -49,46 +49,46 @@ cd MacADSBMenuBar
 open MenuBarADSB.xcodeproj
 ```
 
-In Xcode auf **Run** drücken (⌘R). Beim ersten Start fragt macOS nach Standort‑Berechtigung — die wird benötigt, um den Radius um deine Position zu bestimmen.
+Hit **Run** in Xcode (⌘R). On first launch macOS asks for location permission — needed to determine the radius around your position.
 
-## Lokalisierung
+## Localization
 
-Die App nutzt String Catalogs (`Localizable.xcstrings`, `InfoPlist.xcstrings`) mit Englisch als Source‑Sprache und Deutsch als Übersetzung.
+The app uses String Catalogs (`Localizable.xcstrings`, `InfoPlist.xcstrings`) with English as the source language and German as a translation.
 
-- macOS auf **Deutsch** → App in Deutsch, Zahlen mit Komma (z. B. `1,5 km`)
-- macOS auf **Englisch** → App in Englisch, Zahlen mit Punkt (z. B. `1.5 km`)
-- Per‑App‑Sprachwahl über *Systemeinstellungen → Allgemein → Sprache & Region → Apps*
+- macOS in **English** → app in English, numbers with a dot (e.g. `1.5 km`)
+- macOS in **German** → app in German, numbers with a comma (e.g. `1,5 km`)
+- Per-app language override via *System Settings → General → Language & Region → Applications*
 
-Eine weitere Sprache hinzufügen: `de` zu `knownRegions` in `project.pbxproj` ergänzen, im String Catalog die neue Sprache anlegen, Übersetzungen einpflegen.
+To add another language: add the locale to `knownRegions` in `project.pbxproj`, add the language in the String Catalog, then provide translations.
 
-## Projektstruktur
+## Project layout
 
 ```
 MenuBarADSB/
-├── MenuBarADSBApp.swift        // App Entry, Scene Setup
+├── MenuBarADSBApp.swift        // App entry, scene setup
 ├── Models/                      // Aircraft, DisplayField, MenuBarSelection, GeoMath
 ├── Services/                    // ADSBService, RouteService, LocationService,
 │                                // NotificationService, LaunchAtLoginService
-├── State/                       // AppSettings (UserDefaults), AircraftStore (Polling)
+├── State/                       // AppSettings (UserDefaults), AircraftStore (polling)
 ├── Views/                       // MenuBarLabelView, MenuBarContentView, SettingsView
 ├── Localizable.xcstrings        // UI strings EN/DE
 └── InfoPlist.xcstrings          // NSLocationUsageDescription EN/DE
 ```
 
-## Ideen für später
+## Ideas for later
 
-- Watchlist / Favoriten (Callsign‑Patterns hervorheben)
-- Manueller Standort‑Override
-- Trend‑Indikator (nähert sich / entfernt sich)
-- Flugzeug‑Foto via Planespotters
-- Inline‑Map im Popover
-- Pause / Snooze
-- Mehrere Zonen (Alert‑Radius vs. Anzeige‑Radius)
+- Watchlist / favourites (highlight callsign patterns)
+- Manual location override
+- Trend indicator (approaching / receding)
+- Aircraft photos via Planespotters
+- Inline map in the popover
+- Pause / snooze
+- Multiple zones (alert radius vs. display radius)
 
-## Lizenz
+## License
 
-Aktuell keine Lizenz hinterlegt. Bei Bedarf gerne ein Issue aufmachen.
+No license set yet. Open an issue if you need one.
 
 ---
 
-*Für persönliche Nutzung gebaut. Kein Affiliation mit adsb.lol oder adsbdb.com.*
+*Built for personal use. Not affiliated with adsb.lol or adsbdb.com.*
