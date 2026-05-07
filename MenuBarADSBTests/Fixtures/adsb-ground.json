@@ -1,0 +1,6 @@
+{
+  "ac": [
+    { "hex": "abc123", "flight": "N12345", "alt_baro": "ground", "lat": 50.0, "lon": 8.0 }
+  ],
+  "msg": "No error", "now": 1746442800000
+}
