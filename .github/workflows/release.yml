@@ -26,7 +26,7 @@ jobs:
         run: |
           xcodebuild \
             -project MenuBarADSB.xcodeproj \
-            -target MenuBarADSB \
+            -scheme MenuBarADSB \
             -configuration Release \
             -derivedDataPath build \
             CODE_SIGN_IDENTITY="-" \
