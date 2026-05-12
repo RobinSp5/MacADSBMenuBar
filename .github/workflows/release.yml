@@ -1,0 +1,58 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build app (ad-hoc signed)
+        run: |
+          xcodebuild \
+            -project MenuBarADSB.xcodeproj \
+            -target MenuBarADSB \
+            -configuration Release \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGN_STYLE=Manual \
+            DEVELOPMENT_TEAM="" \
+            MARKETING_VERSION="${{ steps.version.outputs.version }}" \
+            CURRENT_PROJECT_VERSION="${{ github.run_number }}" \
+            clean build
+
+      - name: Package app as ZIP
+        id: package
+        run: |
+          APP_PATH="build/Build/Products/Release/MenuBarADSB.app"
+          ZIP_NAME="MenuBarADSB-${{ steps.version.outputs.version }}.zip"
+          ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "$ZIP_NAME"
+          echo "zip_name=$ZIP_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: MenuBarADSB ${{ steps.version.outputs.version }}
+          files: ${{ steps.package.outputs.zip_name }}
+          generate_release_notes: true
+          body: |
+            ## MenuBarADSB ${{ steps.version.outputs.version }}
+
+            **Installation:** Download the ZIP, unpack it, and move `MenuBarADSB.app` to `/Applications`.
+
+            **First launch:** The app is unsigned (ad-hoc only). On first launch, right-click the app → *Open* → confirm the Gatekeeper dialog. Subsequent launches work normally.
