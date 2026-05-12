@@ -14,6 +14,18 @@
 
 MenuBarADSB lives in your menu bar and shows the closest (or highest / lowest / fastest) aircraft within a configurable radius around your current location. Click it to see the full list of nearby aircraft — identifier, airline, route, type, altitude, speed, distance, and heading. Clicking an aircraft opens it on Flightradar24 or the adsb.lol globe.
 
+## Screenshots
+
+<p align="center">
+  <img src="Screenshots/menubar-dropdown.png" alt="Menu bar with featured aircraft and dropdown" width="320" />
+</p>
+
+<p align="center">
+  <img src="Screenshots/settings-general.png" alt="Settings — radius, update interval, notifications, launch at login" width="380" />
+  &nbsp;
+  <img src="Screenshots/settings-display-fields.png" alt="Settings — menu bar and dropdown display fields" width="380" />
+</p>
+
 ## Features
 
 - **Live tracking** within a 1–50 km radius, updating every 5–60 seconds
