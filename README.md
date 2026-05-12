@@ -37,7 +37,16 @@ The app fetches data **live** from two public APIs — nothing is stored locally
 
 Big thanks to the maintainers of both projects for offering these for free.
 
-## Build & run
+## Install
+
+**Requirements:** macOS 26 or newer.
+
+1. Grab the latest `MenuBarADSB-*.zip` from the [Releases page](https://github.com/RobinSp5/MacADSBMenuBar/releases/latest).
+2. Unzip it and move `MenuBarADSB.app` to `/Applications`.
+3. **First launch:** the app is unsigned (ad-hoc only — no Apple Developer ID), so macOS Gatekeeper blocks the default double-click. Right-click the app → **Open** → confirm the dialog. After that it launches normally.
+4. macOS will ask for location permission — needed to determine the radius around your position.
+
+## Build from source
 
 **Requirements:**
 - macOS 26 or newer
