@@ -1,8 +1,6 @@
 # MenuBarADSB
 
-<p align="center">
-  <img src="AppIconMenuBarADSB.jpg" alt="MenuBarADSB Icon" width="128" />
-</p>
+https://github.com/user-attachments/assets/e8b2ad3c-4627-44c3-9a17-b22e8a130b86
 
 <p align="center">
   A small macOS menu bar app that shows aircraft in your area in real time.
